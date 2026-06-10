@@ -1,11 +1,27 @@
 import telebot
 import requests
+import os
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import threading
 
 TOKEN = "8001126345:AAGA56L12XAkH8V3bemStEMxyUMfP3nHZlU"
 bot = telebot.TeleBot(TOKEN)
 
 WATCHLIST = ['RELIANCE', 'SBIN', 'TATAMOTORS', 'INFY', 'HDFCBANK']
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+
+# Render ની પોર્ટ એરર સોલ્વ કરવા માટે નાનું સર્વર લોજિક
+class HealthCheckServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(b"Bot is Running Safely!")
+
+def run_health_server():
+    port = int(os.environ.get("PORT", 10000))
+    server = HTTPServer(("0.0.0.0", port), HealthCheckServer)
+    server.serve_forever()
 
 def get_deep_data(symbol):
     url = f"https://www.nseindia.com/api/quote-equity?symbol={symbol}"
@@ -70,5 +86,8 @@ def sec(m):
 def ipo(m): 
     bot.reply_to(m, "🚀 *IPO Pre-Market:* લિસ્ટિંગ સેશન ટ્રેકર એક્ટિવ છે. કાલે સવારે નવો ડેટા ફેચ થશે.")
 
-print("🚀 માસ્ટર બોટ સેફ મોડમાં લાઈવ છે...")
-bot.infinity_polling()
+if __name__ == "__main__":
+    # બેકગ્રાઉન્ડમાં પોર્ટ ચાલુ રાખશે
+    threading.Thread(target=run_health_server, daemon=True).start()
+    print("🚀 માસ્ટર બોટ ક્લાઉડ મોડમાં લાઈવ છે...")
+    bot.infinity_polling()
