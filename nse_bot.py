@@ -5,7 +5,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import threading
 
 # તમારો નવો ટોકન અહીં સેટ કરી દીધો છે
-TOKEN = "8001126345:AAHrejFS_bG5bSqDt6FC41MNNfAWLthyup8"
+TOKEN = "8001126345:AAFm2pZ3Lla5hsO-GtYgRq60W4k5Ha0dNUI"
 bot = telebot.TeleBot(TOKEN)
 
 WATCHLIST = ['RELIANCE', 'SBIN', 'TATAMOTORS', 'INFY', 'HDFCBANK']
