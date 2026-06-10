@@ -4,7 +4,7 @@ import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import threading
 
-TOKEN = "8001126345:AAGA56L12XAkH8V3bemStEMxyUMfP3nHZlU"
+TOKEN = "8001126345:AAHrejFS_bG5bSqDt6FC41MNNfAWLthyup8"
 bot = telebot.TeleBot(TOKEN)
 
 WATCHLIST = ['RELIANCE', 'SBIN', 'TATAMOTORS', 'INFY', 'HDFCBANK']
